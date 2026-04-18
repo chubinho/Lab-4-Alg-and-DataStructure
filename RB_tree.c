@@ -138,3 +138,43 @@ tree search(RBTree * tree, char *key){
     }
     return (current == tree->NIL)? NULL: current;
 }
+
+void insert(RBTree *tree, char *key, int value){
+    Node *z = (Node*)malloc(sizeof(Node));
+    if (z == NULL){
+        return;
+    }
+    z->value = value;
+    strncpy(z->key, key, 6);
+    z->key[6] = '\0';
+    z->left = tree->NIL;
+    z->right = tree->NIL;
+    z->color = RED;
+
+    Node *y = tree->NIL;
+    Node *x = tree->root;
+
+    while (x != tree->NIL){
+        y = x;
+        if (strcmp(z->key, x->key) < 0){
+            x = x->left;
+        }
+        else{
+            x = x->right;
+        }
+    }
+    z->parent = y;
+    if (y == tree->NIL){
+        tree->root = z;
+    }
+    else if (strcmp(z->key, y->key) < 0){
+        y->left = z;
+
+    }
+    else{
+        y->right = z;
+
+    }
+    insert_fixup(tree, z);
+
+}
