@@ -1,0 +1,16 @@
+1 insert qwerty 3.140000
+1 insert asdf 5.000000
+3 print tree
+ Tree Structure:
+
+qwerty(B)
+
+          asdf(R)
+ 4 search asdf
+Result: Found value 5.000000
+2 delete qwerty
+3 print tree
+ Tree Structure:
+
+asdf(B)
+ 

@@ -3,12 +3,29 @@
 #include <string.h>
 #include "lab_4.h"
 
+
+RBTree * create_tree(){
+    RBTree *tree = (RBTree *)malloc(sizeof(RBTree));
+    if (tree == NULL)
+        return NULL;
+
+    tree->NIL = (Node*)malloc(sizeof(Node));
+    tree->NIL->color = BLACK;
+    tree->NIL->left = NULL;
+    tree->NIL->right = NULL;
+    tree->NIL->parent = NULL;
+    strcpy(tree->NIL->key, "NIL");
+    tree->root = tree->NIL;
+    return tree;
+}
+
+
 tree create_node(char *key, double value, tree Nil_node)
 {
     tree newNode = (tree)malloc(sizeof(Node));
     if (newNode == NULL)
     {
-        fprinf(stderr, "Memory are allocation\n");
+        fprintf(stderr, "Memory are allocation\n");
         exit(1);
     }
     strncpy(newNode->key, key, 6);
@@ -22,6 +39,22 @@ tree create_node(char *key, double value, tree Nil_node)
     newNode->parent = Nil_node;
 
     return newNode;
+}
+
+void print_tree(RBTree *tree, Node *root, int space)
+{
+    if (root == tree->NIL)
+        return;
+
+    space += 10;
+    print_tree(tree, root->right, space);
+
+    printf("\n");
+    for (int i = 10; i < space; i++)
+        printf(" ");
+    printf("%s(%s)\n", root->key, root->color == RED ? "R" : "B");
+
+    print_tree(tree, root->left, space);
 }
 
 void left_rotate(RBTree *tree, Node *x)
@@ -102,46 +135,54 @@ void insert_fixup(RBTree *tree, Node *z)
                 right_rotate(tree, z->parent->parent);
             }
         }
-        else{
+        else
+        {
             Node *uncle = z->parent->parent->left;
-            if (uncle->color == RED){
+            if (uncle->color == RED)
+            {
                 z->parent->color = BLACK;
                 z->parent->parent->color = RED;
                 uncle->color = BLACK;
-                z = z->parent->parent   ;
+                z = z->parent->parent;
             }
-            else{
-                if (z == z->parent->left){
+            else
+            {
+                if (z == z->parent->left)
+                {
                     z = z->parent;
                     right_rotate(tree, z);
                 }
-            z->parent->color = BLACK;
-            z->parent->parent->color = RED;
-            left_rotate(tree, z->parent->parent);
-
+                z->parent->color = BLACK;
+                z->parent->parent->color = RED;
+                left_rotate(tree, z->parent->parent);
             }
         }
     }
     tree->root->color = BLACK;
 }
 
-tree search(RBTree * tree, char *key){
-    Node * current = tree->root;
-    while (current != tree->NIL && strcmp(key, current->key) != 0){
-        if (strcmp(key, current->key) < 0){
+tree search(RBTree *tree, char *key)
+{
+    Node *current = tree->root;
+    while (current != tree->NIL && strcmp(key, current->key) != 0)
+    {
+        if (strcmp(key, current->key) < 0)
+        {
             current = current->left;
         }
-        else{
+        else
+        {
             current = current->right;
         }
-
     }
-    return (current == tree->NIL)? NULL: current;
+    return (current == tree->NIL) ? NULL : current;
 }
 
-void insert(RBTree *tree, char *key, int value){
-    Node *z = (Node*)malloc(sizeof(Node));
-    if (z == NULL){
+void insert(RBTree *tree, char *key, double value)
+{
+    Node *z = (Node *)malloc(sizeof(Node));
+    if (z == NULL)
+    {
         return;
     }
     z->value = value;
@@ -154,27 +195,75 @@ void insert(RBTree *tree, char *key, int value){
     Node *y = tree->NIL;
     Node *x = tree->root;
 
-    while (x != tree->NIL){
+    while (x != tree->NIL)
+    {
         y = x;
-        if (strcmp(z->key, x->key) < 0){
+        if (strcmp(z->key, x->key) < 0)
+        {
             x = x->left;
         }
-        else{
+        else
+        {
             x = x->right;
         }
     }
     z->parent = y;
-    if (y == tree->NIL){
+    if (y == tree->NIL)
+    {
         tree->root = z;
     }
-    else if (strcmp(z->key, y->key) < 0){
+    else if (strcmp(z->key, y->key) < 0)
+    {
         y->left = z;
-
     }
-    else{
+    else
+    {
         y->right = z;
-
     }
     insert_fixup(tree, z);
+}
 
+void free_nodes(RBTree *tree, Node *node)
+{
+    if (node != tree->NIL)
+    {
+        free_nodes(tree, node->left);
+        free_nodes(tree, node->right);
+        free(node);
+    }
+}
+
+void destroy_tree(RBTree *tree, Node* node)
+{
+    if (node != tree->NIL)
+    {
+        destroy_tree(tree, node->left);
+        destroy_tree(tree, node->right);
+        free(node);
+    }
+    if (node == tree->root)
+    {
+        free(tree->NIL);
+        free(tree);
+    }
+}
+
+void print_tree_to_file(RBTree *tree, Node *root, int space, FILE *out)
+{
+    if (root == tree->NIL)
+    {
+        return;
+    }
+
+    space += 10;
+    print_tree_to_file(tree, root->right, space, out);
+
+    fprintf(out, "\n");
+    for (int i = 10; i < space; i++)
+    {
+        fprintf(out, " ");
+    }
+    fprintf(out, "%s(%s)\n", root->key, root->color == RED ? "R" : "B");
+
+    print_tree_to_file(tree, root->left, space, out);
 }

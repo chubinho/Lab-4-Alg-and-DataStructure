@@ -1,0 +1,21 @@
+1 insert aaa 1.000000
+1 insert aaa 2.000000
+1 insert bbbbbb 3.000000
+3 print tree
+ Tree Structure:
+
+          bbbbbb(R)
+
+aaa(B)
+
+          aaa(R)
+ 4 ccc
+Result: Not Found
+2 delete bbbbbb
+3 print tree
+ Tree Structure:
+
+aaa(B)
+
+          aaa(R)
+ 

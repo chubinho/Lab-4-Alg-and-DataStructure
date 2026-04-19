@@ -1,0 +1,63 @@
+1 insert apple 1.100000
+1 insert banana 2.200000
+1 insert cherry 3.300000
+1 insert date 4.400000
+1 insert elder 5.500000
+1 insert fig 6.600000
+1 insert grape 7.700000
+1 insert hazel 8.800000
+1 insert iris 9.900000
+1 insert joker 10.100000
+1 insert kiwi 11.200000
+1 insert lemon 12.300000
+1 insert mango 13.400000
+1 insert nut 14.500000
+1 insert olive 15.600000
+1 insert pear 16.700000
+1 insert quince 17.800000
+1 insert rose 18.900000
+1 insert star 19.100000
+1 insert tomato 20.200000
+3 print tree
+ Tree Structure:
+
+                                                  tomato(R)
+
+                                        star(B)
+
+                              rose(R)
+
+                                        quince(B)
+
+                    pear(B)
+
+                                        olive(B)
+
+                              nut(R)
+
+                                        mango(B)
+
+          lemon(R)
+
+                              kiwi(B)
+
+                    joker(B)
+
+                              iris(B)
+
+hazel(B)
+
+                              grape(B)
+
+                    fig(B)
+
+                              elder(B)
+
+          date(R)
+
+                              cherry(B)
+
+                    banana(B)
+
+                              apple(B)
+ 

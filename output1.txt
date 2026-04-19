@@ -1,0 +1,16 @@
+1 insert key1 10.500000
+1 insert key2 20.000000
+3 print tree
+ Tree Structure:
+
+          key2(R)
+
+key1(B)
+ 4 search key1
+Result: Found value 10.500000
+2 delete key1
+3 print tree
+ Tree Structure:
+
+key2(B)
+ 1 insert 1 1.000000
