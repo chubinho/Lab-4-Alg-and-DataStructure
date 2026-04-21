@@ -16,7 +16,7 @@ void rb_transplant(RBTree *tree, Node *u, Node *v)
     {
         u->parent->right = v;
     }
-    v->parent = u->parent;
+    v->parent = u->parent; 
 }
 
 Node *tree_minimum(RBTree *tree, Node *x)
