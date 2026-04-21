@@ -223,16 +223,6 @@ void insert(RBTree *tree, char *key, double value)
     insert_fixup(tree, z);
 }
 
-void free_nodes(RBTree *tree, Node *node)
-{
-    if (node != tree->NIL)
-    {
-        free_nodes(tree, node->left);
-        free_nodes(tree, node->right);
-        free(node);
-    }
-}
-
 void destroy_tree(RBTree *tree, Node* node)
 {
     if (node != tree->NIL)
